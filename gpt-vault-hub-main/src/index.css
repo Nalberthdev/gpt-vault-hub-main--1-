@@ -112,10 +112,11 @@
     --ring: 236 11% 28%;
 
     /* Chat colors */
-    --chat-bubble-user: 235 10% 27%;
-    --chat-bubble-assistant: 233 11% 30%;
-    --chat-input-bg: 236 11% 28%;
-    --sidebar-bg: 220 5% 13%;
+    /* Colors approximating the classic ChatGPT dark theme */
+    --chat-bubble-user: 236 13% 33%;      /* #444654 */
+    --chat-bubble-assistant: 236 13% 24%; /* #343541 */
+    --chat-input-bg: 236 11% 23%;         /* #2f303b */
+    --sidebar-bg: 240 7% 12%;             /* #202123 */
     
     /* Dark admin colors */
     --admin-accent: 217 91% 65%;
