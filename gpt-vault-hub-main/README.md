@@ -120,7 +120,7 @@ src/
 - **AuthContext**: Autenticação e gerenciamento de usuários
 - **ThemeContext**: Controle de tema claro/escuro
 - **ChatContext**: Mensagens e interações do chat
-- **LocalStorage**: Persistência de preferências
+- **LocalStorage**: Persistência de preferências e histórico de conversas
 
 ## 🛠️ Instalação e Desenvolvimento
 
