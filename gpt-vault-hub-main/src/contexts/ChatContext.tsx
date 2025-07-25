@@ -211,6 +211,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         c.id === activeConversationId
           ? {
               ...c,
+              title: 'Nova Conversa',
               messages: [
                 {
                   id: '1',
