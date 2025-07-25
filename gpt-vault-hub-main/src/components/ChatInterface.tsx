@@ -106,8 +106,8 @@ const ChatInterface: React.FC = () => {
               className={cn(
                 'max-w-[80%] rounded-2xl px-4 py-3 shadow-sm',
                 message.role === 'user'
-                  ? 'bg-chat-bubble-user text-primary-foreground ml-12'
-                  : 'bg-chat-bubble-assistant text-foreground mr-12'
+                  ? 'bg-white dark:bg-[#23232a] text-black dark:text-white ml-12'
+                  : 'bg-[#f5f5f5] dark:bg-[#23232a] text-black dark:text-white mr-12'
               )}
             >
               <div className="text-sm leading-relaxed whitespace-pre-wrap">
