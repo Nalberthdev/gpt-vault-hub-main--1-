@@ -106,7 +106,7 @@ const ChatInterface: React.FC = () => {
               className={cn(
                 'max-w-[80%] rounded-2xl px-4 py-3 shadow-sm',
                 message.role === 'user'
-                  ? 'bg-chat-bubble-user text-primary-foreground ml-12'
+                  ? 'bg-chat-bubble-user text-foreground ml-12'
                   : 'bg-chat-bubble-assistant text-foreground mr-12'
               )}
             >
