@@ -80,42 +80,42 @@
   }
 
   .dark {
-    /* Dark theme ChatGPT inspired */
-    --background: 0 0% 8%;
-    --foreground: 0 0% 95%;
-    
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 95%;
-    
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 95%;
-    
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --primary-hover: 0 0% 90%;
-    
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 0 0% 95%;
-    --secondary-hover: 0 0% 16%;
-    
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 60%;
-    
-    --accent: 0 0% 14%;
-    --accent-foreground: 0 0% 95%;
-    
+    /* Dark theme matching ChatGPT */
+    --background: 235 11% 23%; /* #343541 */
+    --foreground: 240 15% 94%; /* #ECECF1 */
+
+    --card: 235 11% 23%; /* #343541 */
+    --card-foreground: 240 15% 94%; /* #ECECF1 */
+
+    --popover: 235 11% 23%; /* #343541 */
+    --popover-foreground: 240 15% 94%; /* #ECECF1 */
+
+    --primary: 240 15% 94%; /* #ECECF1 */
+    --primary-foreground: 235 11% 23%; /* #343541 */
+    --primary-hover: 233 9% 18%; /* #2A2B32 */
+
+    --secondary: 235 11% 23%; /* #343541 */
+    --secondary-foreground: 240 15% 94%; /* #ECECF1 */
+    --secondary-hover: 233 9% 18%; /* #2A2B32 */
+
+    --muted: 235 11% 23%; /* #343541 */
+    --muted-foreground: 240 5% 65%; /* #A1A1AA */
+
+    --accent: 235 11% 23%; /* #343541 */
+    --accent-foreground: 240 15% 94%; /* #ECECF1 */
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    
-    --border: 0 0% 20%;
-    --input: 0 0% 14%;
-    --ring: 0 0% 100%;
-    
-    /* Dark chat colors */
-    --chat-bubble-user: 0 0% 100%;
-    --chat-bubble-assistant: 0 0% 14%;
-    --chat-input-bg: 0 0% 12%;
-    --sidebar-bg: 0 0% 10%;
+
+    --border: 236 11% 28%; /* #40414F */
+    --input: 236 11% 28%; /* #40414F */
+    --ring: 236 11% 28%; /* #40414F */
+
+    /* Chat colors */
+    --chat-bubble-user: 235 10% 27%; /* #3E3F4B */
+    --chat-bubble-assistant: 233 11% 30%; /* #444654 */
+    --chat-input-bg: 236 11% 28%; /* #40414F */
+    --sidebar-bg: 220 5% 13%; /* #202123 */
     
     /* Dark admin colors */
     --admin-accent: 217 91% 65%;
@@ -125,14 +125,14 @@
     --gradient-primary: linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 90%));
     --gradient-admin: linear-gradient(135deg, hsl(217 91% 65%), hsl(217 91% 70%));
     
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 0 0% 100%;
+    --sidebar-background: 220 5% 13%; /* #202123 */
+    --sidebar-foreground: 240 15% 94%; /* #ECECF1 */
+    --sidebar-primary: 240 15% 94%; /* #ECECF1 */
+    --sidebar-primary-foreground: 235 11% 23%; /* #343541 */
+    --sidebar-accent: 236 11% 28%; /* #40414F */
+    --sidebar-accent-foreground: 240 15% 94%; /* #ECECF1 */
+    --sidebar-border: 236 11% 28%; /* #40414F */
+    --sidebar-ring: 236 11% 28%; /* #40414F */
   }
 }
 
