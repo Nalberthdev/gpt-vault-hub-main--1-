@@ -206,7 +206,11 @@ const MainLayout: React.FC = () => {
               {activeTab === 'admin' && 'Gerencie usuários e permissões'}
             </p>
           </div>
-          
+          {activeTab === 'chat' && (
+            <Button size="sm" onClick={startNewConversation}>
+              Nova Conversa
+            </Button>
+          )}
         </div>
 
         {/* Content */}
