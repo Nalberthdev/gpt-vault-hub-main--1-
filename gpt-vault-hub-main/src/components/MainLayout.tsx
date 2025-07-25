@@ -27,7 +27,13 @@ const MainLayout: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('chat');
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const { clearChat } = useChat();
+  const {
+    clearChat,
+    conversations,
+    activeConversationId,
+    startNewConversation,
+    selectConversation,
+  } = useChat();
 
   const handleLogout = () => {
     if (window.confirm('Tem certeza que deseja sair?')) {
@@ -119,7 +125,28 @@ const MainLayout: React.FC = () => {
 
           {/* Chat Actions */}
           {activeTab === 'chat' && (
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 space-y-4">
+              <div className="space-y-1">
+                <h3 className="text-xs font-semibold text-muted-foreground mb-1">Histórico</h3>
+                {conversations.map((conv) => (
+                  <Button
+                    key={conv.id}
+                    variant={conv.id === activeConversationId ? 'secondary' : 'ghost'}
+                    className="w-full justify-start truncate"
+                    onClick={() => selectConversation(conv.id)}
+                  >
+                    {conv.title || 'Nova Conversa'}
+                  </Button>
+                ))}
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={startNewConversation}
+              >
+                Nova Conversa
+              </Button>
               <Button
                 variant="outline"
                 size="sm"
@@ -179,7 +206,11 @@ const MainLayout: React.FC = () => {
               {activeTab === 'admin' && 'Gerencie usuários e permissões'}
             </p>
           </div>
-          
+          {activeTab === 'chat' && (
+            <Button size="sm" onClick={startNewConversation}>
+              Nova Conversa
+            </Button>
+          )}
         </div>
 
         {/* Content */}
