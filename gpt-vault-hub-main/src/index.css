@@ -81,6 +81,7 @@
 
   .dark {
     /* Dark theme matching ChatGPT */
+    /* Hex: background #343541, foreground #ECECF1 */
     --background: 235 11% 23%;
     --foreground: 240 15% 94%;
 
