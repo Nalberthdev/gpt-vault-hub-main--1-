@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 import { useAuth } from './AuthContext';
 
 export interface ChatMessage {
@@ -14,27 +20,75 @@ export interface ChatMessage {
   }[];
 }
 
+export interface Conversation {
+  id: string;
+  title: string;
+  createdAt: string;
+  messages: ChatMessage[];
+}
+
 interface ChatContextType {
   messages: ChatMessage[];
+  conversations: Conversation[];
+  activeConversationId: string | null;
   isTyping: boolean;
   sendMessage: (content: string, attachments?: File[]) => Promise<void>;
   clearChat: () => void;
+  startNewConversation: () => void;
+  selectConversation: (id: string) => void;
   processCommand: (command: string) => Promise<void>;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: 'Olá! Eu sou seu assistente GPT personalizado. Como posso ajudá-lo hoje?',
-      timestamp: new Date().toISOString(),
-    },
-  ]);
-  const [isTyping, setIsTyping] = useState(false);
   const { user } = useAuth();
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const createInitialConversation = (): Conversation => ({
+    id: Date.now().toString(),
+    title: 'Nova Conversa',
+    createdAt: new Date().toISOString(),
+    messages: [
+      {
+        id: '1',
+        role: 'assistant',
+        content: 'Olá! Eu sou seu assistente GPT personalizado. Como posso ajudá-lo hoje?',
+        timestamp: new Date().toISOString(),
+      },
+    ],
+  });
+
+  // Load conversations from localStorage when user changes
+  useEffect(() => {
+    if (user) {
+      const stored = localStorage.getItem(`gpt-conversations-${user.id}`);
+      if (stored) {
+        const convs: Conversation[] = JSON.parse(stored);
+        setConversations(convs);
+        setActiveConversationId(convs[0]?.id || null);
+      } else {
+        const conv = createInitialConversation();
+        setConversations([conv]);
+        setActiveConversationId(conv.id);
+      }
+    } else {
+      setConversations([]);
+      setActiveConversationId(null);
+    }
+  }, [user]);
+
+  // Persist conversations
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(`gpt-conversations-${user.id}`, JSON.stringify(conversations));
+    }
+  }, [conversations, user]);
+
+  const messages =
+    conversations.find(c => c.id === activeConversationId)?.messages || [];
 
   const simulateTyping = (duration: number = 2000) => {
     setIsTyping(true);
@@ -101,7 +155,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [user]);
 
   const sendMessage = async (content: string, attachments?: File[]) => {
-    // Add user message
+    if (!activeConversationId) return;
+
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
@@ -114,12 +169,20 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
       })),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setConversations(prev =>
+      prev.map(c =>
+        c.id === activeConversationId
+          ? {
+              ...c,
+              title: c.title === 'Nova Conversa' ? content.slice(0, 20) : c.title,
+              messages: [...c.messages, userMessage],
+            }
+          : c
+      )
+    );
 
-    // Simulate processing time
     await simulateTyping();
 
-    // Generate and add assistant response
     const response = generateResponse(content, attachments);
     const assistantMessage: ChatMessage = {
       id: (Date.now() + 1).toString(),
@@ -128,7 +191,13 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
       timestamp: new Date().toISOString(),
     };
 
-    setMessages(prev => [...prev, assistantMessage]);
+    setConversations(prev =>
+      prev.map(c =>
+        c.id === activeConversationId
+          ? { ...c, messages: [...c.messages, assistantMessage] }
+          : c
+      )
+    );
   };
 
   const processCommand = async (command: string) => {
@@ -136,21 +205,45 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const clearChat = () => {
-    setMessages([
-      {
-        id: '1',
-        role: 'assistant',
-        content: 'Chat limpo! Como posso ajudá-lo?',
-        timestamp: new Date().toISOString(),
-      },
-    ]);
+    if (!activeConversationId) return;
+    setConversations(prev =>
+      prev.map(c =>
+        c.id === activeConversationId
+          ? {
+              ...c,
+              messages: [
+                {
+                  id: '1',
+                  role: 'assistant',
+                  content: 'Chat limpo! Como posso ajudá-lo?',
+                  timestamp: new Date().toISOString(),
+                },
+              ],
+            }
+          : c
+      )
+    );
+  };
+
+  const startNewConversation = () => {
+    const conv = createInitialConversation();
+    setConversations(prev => [conv, ...prev]);
+    setActiveConversationId(conv.id);
+  };
+
+  const selectConversation = (id: string) => {
+    setActiveConversationId(id);
   };
 
   const value: ChatContextType = {
     messages,
+    conversations,
+    activeConversationId,
     isTyping,
     sendMessage,
     clearChat,
+    startNewConversation,
+    selectConversation,
     processCommand,
   };
 
