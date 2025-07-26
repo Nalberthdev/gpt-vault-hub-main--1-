@@ -140,6 +140,28 @@ npm run dev
 npm run build
 ```
 
+## 📲 Notificações via WhatsApp
+
+O repositório inclui um pequeno script para disparar mensagens de WhatsApp via
+Twilio sempre que um agendamento for criado. Defina as seguintes variáveis de
+ambiente antes de executar:
+
+```
+TWILIO_ACCOUNT_SID=ACXXXX
+TWILIO_AUTH_TOKEN=seu_token
+TWILIO_WHATSAPP_FROM='whatsapp:+14155238886'
+TWILIO_WHATSAPP_TO='whatsapp:+5516996233199'
+```
+
+Em seguida, envie a mensagem com:
+
+```bash
+npm run send:whatsapp -- "Mensagem do agendamento"
+```
+
+Integre a chamada desse script no backend ou processo de agendamento da sua
+aplicação para notificar o cliente automaticamente.
+
 ## 🔮 Integração Futura com Supabase
 
 O sistema foi arquitetado para facilitar a integração com Supabase:
