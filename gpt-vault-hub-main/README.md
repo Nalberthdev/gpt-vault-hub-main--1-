@@ -140,6 +140,58 @@ npm run dev
 npm run build
 ```
 
+## 📲 Notificações via WhatsApp
+
+O repositório inclui um pequeno script para disparar mensagens de WhatsApp via
+Twilio sempre que um agendamento for criado. Defina as seguintes variáveis de
+ambiente antes de executar:
+
+```
+TWILIO_ACCOUNT_SID=ACXXXX
+TWILIO_AUTH_TOKEN=seu_token
+TWILIO_WHATSAPP_FROM='whatsapp:+14155238886'
+TWILIO_WHATSAPP_TO='whatsapp:+5516996233199'
+# Opcional para mensagens de template
+TWILIO_CONTENT_SID=HXb5b62575e6e4ff6129ad7c8efe1f983e
+TWILIO_CONTENT_VARIABLES='{"1":"12/1","2":"3pm"}'
+# Campos opcionais para montar uma mensagem padr\u00E3o
+APPOINTMENT_NAME='Maria'
+APPOINTMENT_DATE='12/1'
+APPOINTMENT_TIME='3pm'
+APPOINTMENT_PHONE='+5516996233199'
+```
+
+Em seguida, envie a mensagem com:
+
+```bash
+npm run send:whatsapp -- "Mensagem do agendamento"
+```
+
+Se voc\u00EA n\u00E3o passar uma mensagem pela linha de comando e definir as vari\u00E1veis
+`APPOINTMENT_*`, o script montar\u00E1 automaticamente o seguinte modelo:
+
+```
+Agendamento Confirmado!
+Nome: <APPOINTMENT_NAME>
+Data: <APPOINTMENT_DATE>
+Hor\u00E1rio: <APPOINTMENT_TIME>
+
+Telefone: <APPOINTMENT_PHONE>
+
+Anote essas informa\u00E7\u00F5es! Chegue 10 minutos antes do hor\u00E1rio agendado.
+```
+
+Se `TWILIO_CONTENT_SID` estiver definido, a mensagem será enviada usando o template correspondente e as variáveis em `TWILIO_CONTENT_VARIABLES`.
+
+Integre a chamada desse script no backend ou processo de agendamento da sua
+aplicação para notificar o cliente automaticamente.
+
+### Resolução de Problemas
+- Confirme que todas as dependências foram instaladas com `npm install`.
+- Verifique se as variáveis de ambiente estão corretamente definidas.
+- Caso utilize o sandbox do WhatsApp na Twilio, adicione o número destino e confirme que ele aceitou o convite.
+- Consulte o painel da Twilio para detalhes de eventuais erros ao enviar a mensagem.
+
 ## 🔮 Integração Futura com Supabase
 
 O sistema foi arquitetado para facilitar a integração com Supabase:
