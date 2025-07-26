@@ -180,6 +180,21 @@ CREATE TABLE files (
 );
 ```
 
+### 🔐 Políticas de RLS
+
+O script `supabase_policies.sql` contém um conjunto de políticas de segurança para
+garantir que os dados inseridos em `appointments`, `available_slots` e `profiles`
+respeitem as regras de acesso. Para aplicá-las, execute o arquivo no console SQL
+do Supabase:
+
+```bash
+psql $DB_URL -f supabase_policies.sql
+```
+
+Essas políticas permitem que qualquer usuário autenticado crie agendamentos,
+enquanto a gestão de horários disponíveis fica restrita a administradores
+(campo `is_admin` na tabela `profiles`).
+
 ## 🎯 Casos de Uso
 
 ### 👤 Usuário Comum
