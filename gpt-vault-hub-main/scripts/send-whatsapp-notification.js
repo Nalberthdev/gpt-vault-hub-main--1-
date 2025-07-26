@@ -7,11 +7,10 @@
 
 import twilio from 'twilio';
 
-const message = process.argv.slice(2).join(' ');
-if (!message) {
-  console.error('Usage: node scripts/send-whatsapp-notification.js "message"');
-  process.exit(1);
-}
+// Optional: load environment variables from a .env file if present
+import 'dotenv/config';
+
+const cliMessage = process.argv.slice(2).join(' ');
 
 const {
   TWILIO_ACCOUNT_SID,
@@ -19,6 +18,8 @@ const {
   TWILIO_WHATSAPP_FROM = 'whatsapp:+14155238886',
   // Default to the customer-provided number
   TWILIO_WHATSAPP_TO = 'whatsapp:+5516996233199',
+  TWILIO_CONTENT_SID,
+  TWILIO_CONTENT_VARIABLES,
 } = process.env;
 
 if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
@@ -28,12 +29,31 @@ if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
 
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
+const params = {
+  from: TWILIO_WHATSAPP_FROM,
+  to: TWILIO_WHATSAPP_TO,
+};
+
+if (TWILIO_CONTENT_SID) {
+  params.contentSid = TWILIO_CONTENT_SID;
+  if (TWILIO_CONTENT_VARIABLES) {
+    params.contentVariables = TWILIO_CONTENT_VARIABLES;
+  }
+  if (cliMessage) {
+    console.warn(
+      'Ignoring CLI message because TWILIO_CONTENT_SID is set. Use TWILIO_CONTENT_VARIABLES to customize the template.'
+    );
+  }
+} else {
+  if (!cliMessage) {
+    console.error('Usage: node scripts/send-whatsapp-notification.js "message"');
+    process.exit(1);
+  }
+  params.body = cliMessage;
+}
+
 client.messages
-  .create({
-    from: TWILIO_WHATSAPP_FROM,
-    to: TWILIO_WHATSAPP_TO,
-    body: message,
-  })
+  .create(params)
   .then(msg => {
     console.log('Message sent:', msg.sid);
   })
