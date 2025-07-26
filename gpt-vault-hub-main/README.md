@@ -53,11 +53,11 @@ Um sistema completo de GPT personalizado com controle de acesso, upload de arqui
 
 ### 📊 Contas de Demonstração
 
-| Tipo        | Email             | Senha     | Funcionalidades            |
-|-------------|-------------------|-----------|----------------------------|
-| **Admin**   | admin@gpt.com     | admin123  | Acesso total + gerenciamento |
-| **Usuário** | joao@email.com    | user123   | Funcionalidades básicas    |
-| **Usuário** | maria@email.com   | user123   | Funcionalidades básicas    |
+| Tipo        | Email             | Senha     | Funcionalidades                |
+|-------------|-------------------|-----------|--------------------------------|
+| **Admin**   | admin@gpt.com     | admin123  | Acesso total + gerenciamento   |
+| **Usuário** | joao@email.com    | user123   | Funcionalidades básicas        |
+| **Usuário** | maria@email.com   | user123   | Funcionalidades básicas        |
 
 ### 🎯 Comandos Suportados
 
@@ -95,4 +95,3 @@ Um sistema completo de GPT personalizado com controle de acesso, upload de arqui
 ## 🏗️ Arquitetura Técnica
 
 ### 📂 Estrutura de Pastas
-
